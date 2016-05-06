@@ -1,0 +1,174 @@
+<web-app>
+
+    <servlet>
+        <servlet-name>helloServlet</servlet-name>
+        <servlet-class>servlet.Hello</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helloServlet</servlet-name>
+        <url-pattern>/hi</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addCustomer</servlet-name>
+        <servlet-class>servlet.addCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addCustomer</servlet-name>
+        <url-pattern>/customer/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>depositRequest</servlet-name>
+        <servlet-class>servlet.depositCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>depositRequest</servlet-name>
+        <url-pattern>/customer/deposit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>depositAccept</servlet-name>
+        <servlet-class>servlet.acceptDepositServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>depositAccept</servlet-name>
+        <url-pattern>/admin/requests</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>buyServlet</servlet-name>
+        <servlet-class>servlet.buyOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>buyServlet</servlet-name>
+        <url-pattern>/customer/buy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>sellServlet</servlet-name>
+        <servlet-class>servlet.sellOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sellServlet</servlet-name>
+        <url-pattern>/customer/sell</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>withdrawServlet</servlet-name>
+        <servlet-class>servlet.withdrawCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>withdrawServlet</servlet-name>
+        <url-pattern>/customer/withdraw</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>backupServlet</servlet-name>
+        <servlet-class>servlet.backupMakerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>backupServlet</servlet-name>
+        <url-pattern>/admin/backup</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StatusServlet</servlet-name>
+        <servlet-class>servlet.StatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatusServlet</servlet-name>
+        <url-pattern>/customer/status</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SymbolListServlet</servlet-name>
+        <servlet-class>servlet.SymbolList</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SymbolListServlet</servlet-name>
+        <url-pattern>/api/symbols</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>SymbolInfoByNameServlet</servlet-name>
+        <servlet-class>servlet.SymbolInfoByName</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>SymbolInfoByNameServlet</servlet-name>
+        <url-pattern>/api/symbols/info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerEconomicInfoById</servlet-name>
+        <servlet-class>servlet.CustomerEconomicInfoById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerEconomicInfoById</servlet-name>
+        <url-pattern>/api/customer/ecoInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerCreditById</servlet-name>
+        <servlet-class>servlet.CustomerCreditById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerCreditById</servlet-name>
+        <url-pattern>/api/customer/credit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerActiveOrdersById</servlet-name>
+        <servlet-class>servlet.CustomerActiveOrdersById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerActiveOrdersById</servlet-name>
+        <url-pattern>/api/customer/activeOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerApprovedOrdersById</servlet-name>
+        <servlet-class>servlet.CustomerApprovedOrdersById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerApprovedOrdersById</servlet-name>
+        <url-pattern>/api/customer/approvedOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerDeclinedOrdersById</servlet-name>
+        <servlet-class>servlet.CustomerDeclinedOrdersById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerDeclinedOrdersById</servlet-name>
+        <url-pattern>/api/customer/declinedOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerSharesById</servlet-name>
+        <servlet-class>servlet.CustomerSharesById</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>CustomerSharesById</servlet-name>
+        <url-pattern>/api/customer/shares</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MarketInfo</servlet-name>
+        <servlet-class>servlet.MarketInfo</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>MarketInfo</servlet-name>
+        <url-pattern>/api/Market/info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SampleDataServlet</servlet-name>
+        <servlet-class>servlet.SampleDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SampleDataServlet</servlet-name>
+        <url-pattern>/api/load</url-pattern>
+    </servlet-mapping>
+</web-app>
