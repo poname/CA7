@@ -1,4 +1,3 @@
-add 1 admin adminiam
 deposit  1 100000
 add 2 ali razavi
 deposit 2 10000000

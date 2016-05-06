@@ -33,6 +33,7 @@ public class CustomerDao implements CustomerDaoInterface{
 			if(x.getId().equals(id))
 				return x;
 		}
+		System.out.print("++++++++++++++++" + customers.size());
 		throw new UnknownUserIdException();
 	}
 

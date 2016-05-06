@@ -12,6 +12,7 @@ public class CustomerCreditById extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter("id");
+        System.out.println("=============================" + id);
 	
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();

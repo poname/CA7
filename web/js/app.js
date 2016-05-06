@@ -1,5 +1,14 @@
 var app = angular.module('myApp', []);
 app.controller('mainCtrl', function($scope, $http) {
+    /*
+    $http({
+        method : "POST",
+        url : "api/load"
+    }).then(function(response) {
+        alert(response.data);
+    });
+    */
+
     $scope.firstName= "John";
     $scope.lastName= "Doe";
     $scope.pageTitle = "B_00_rs" ;
@@ -45,10 +54,90 @@ app.controller('mainCtrl', function($scope, $http) {
 
         }).then(function(response) {
             //alert(response.data);
-            $scope.symbolInfo = /*angular.fromJson(*/response.data/*)*/;
+            $scope.symbolInfo = response.data;
         });
     };
 
+    $scope.changeData = function(){
+      $scope.symbolInfo.push({userId:"goolakh"});
+    };
+
+
+    $scope.userInfo = null;
+    $scope.customerId = 2;
+    $http({
+        method : "POST",
+        url : "api/customer/credit",
+        params: {
+            id : $scope.customerId
+        }
+
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.userInfo = response.data;
+    });
+
+
+    $scope.activeOrders = null;
+    $scope.approvedOrders = null;
+    $scope.declinedOrders = null;
+    $http({
+        method : "POST",
+        url : "api/customer/activeOrders",
+        params: {
+            id : $scope.customerId
+        }
+
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.activeOrders = response.data;
+    });
+
+    $http({
+        method : "POST",
+        url : "api/customer/approvedOrders",
+        params: {
+            id : $scope.customerId
+        }
+
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.approvedOrders = response.data;
+    });
+
+    $http({
+        method : "POST",
+        url : "api/customer/declinedOrders",
+        params: {
+            id : $scope.customerId
+        }
+
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.declinedOrders = response.data;
+    });
+
+    $scope.shareBasket = null;
+    $http({
+        method : "POST",
+        url : "api/customer/shares",
+        params: {
+            id : $scope.customerId
+        }
+
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.shareBasket = response.data;
+    });
+
+    $scope.marketActiveOrders = null;
+    $http({
+        method : "POST",
+        url : "api/market/info"
+    }).then(function(response) {
+        //alert(response.data);
+        $scope.marketActiveOrders = response.data;
+    });
 
 });
 

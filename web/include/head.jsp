@@ -17,5 +17,4 @@
 
     <script src="../js/jquery.js" type="text/javascript"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
 </head>

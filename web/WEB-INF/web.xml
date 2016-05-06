@@ -124,7 +124,7 @@
     </servlet>
 	<servlet-mapping>
         <servlet-name>CustomerActiveOrdersById</servlet-name>
-        <url-pattern>/api/customer/activeOrder</url-pattern>
+        <url-pattern>/api/customer/activeOrders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -133,7 +133,7 @@
     </servlet>
 	<servlet-mapping>
         <servlet-name>CustomerApprovedOrdersById</servlet-name>
-        <url-pattern>/api/customer/approvedOrder</url-pattern>
+        <url-pattern>/api/customer/approvedOrders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -142,7 +142,7 @@
     </servlet>
 	<servlet-mapping>
         <servlet-name>CustomerDeclinedOrdersById</servlet-name>
-        <url-pattern>/api/customer/declinedOrder</url-pattern>
+        <url-pattern>/api/customer/declinedOrders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -160,7 +160,7 @@
     </servlet>
 	<servlet-mapping>
         <servlet-name>MarketInfo</servlet-name>
-        <url-pattern>/api/Market/info</url-pattern>
+        <url-pattern>/api/market/info</url-pattern>
     </servlet-mapping>
 
     <servlet>
