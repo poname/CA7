@@ -18,7 +18,7 @@ app.controller('mainCtrl', function($scope, $http) {
         //alert("hi" + i + '::' + $scope.activeIndex );
         //return ($scope.activeIndex === i);
         return (5 === i);
-    }
+    };
 
     $scope.loadSampleData = function(){
         $http({
@@ -26,6 +26,26 @@ app.controller('mainCtrl', function($scope, $http) {
             url : "api/load"
         }).then(function(response) {
             alert(response.data);
+        });
+    };
+
+    $scope.selectedSymbol = null;
+    $scope.symbolInfo = null;
+
+    $scope.setSymbol = function(s){
+        $scope.selectedSymbol = s;
+
+        //angular.element("#symbolModal").modal();
+        $http({
+            method : "POST",
+            url : "api/symbols/info",
+            params: {
+                symbol : s
+            }
+
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.symbolInfo = /*angular.fromJson(*/response.data/*)*/;
         });
     };
 
@@ -96,6 +116,6 @@ app.controller('symbolCtrl', function($scope, $http){
             $scope.symbolList = response.data;
         });
     }
-	
-	
+
+
 });

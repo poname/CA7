@@ -24,10 +24,10 @@
                 <div ng-include="'include/header.html'"></div>
                 <div class="row">
                     <button class="btn btn-warning" ng-click="loadSampleData()">Load</button>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#symbolModal">modal</button>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="status" ng-controller="symbolCtrl" ng-show="true">
                             <table class = "table table-hover table-condensed">
-                                <caption>Hover Table Layout</caption>
 
                                 <thead>
                                 <tr>
@@ -39,31 +39,62 @@
 
                                 <tbody>
 
-                                <tr ng-repeat="x in symbolList | orderBy">
+                                <tr ng-repeat="x in symbolList | orderBy" ng-click="setSymbol(x)"  data-toggle="modal" data-target="#symbolModal">
                                     <td>{{ $index+1 }}</td>
                                     <td>{{ x }}</td>
                                 </tr>
 
-                                <tr>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td>Sachin</td>
-                                    <td>Mumbai</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-
-                                </tr>
                                 </tbody>
 
                             </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="symbolModal" class="modal bs-example-modal-sm4" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>اطلاعات نماد<i class="fa fa-lock"></i></h4>
+                                <p>{{ selectedSymbol }}</p>
+                            </div>
+                            <div class="modal-body">لیست سفارش های فعال
+
+
+                                <table class = "table table-hover table-condensed">
+
+                                    <thead>
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>کاربر</th>
+                                        <th>قیمت</th>
+                                        <th>تعداد اولیه</th>
+                                        <th>تعداد باقیمانده</th>
+                                        <th>عملیات</th>
+                                        <th>مرجع</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    <tr ng-repeat="r in symbolInfo">
+                                        <td>{{ $index+1 }}</td>
+                                        <td>{{ r["userId"] }}</td>
+                                        <td>{{ r.price }}</td>
+                                        <td>{{ r.initQuantity }}</td>
+                                        <td>{{ r.remainingQuantity }}</td>
+                                        <td>{{ r.operation }}</td>
+                                        <td>{{ r.oid }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <a id="ContentPlaceHolder1_btn_Cancel" class="btn btn-warning" style="float: right" href="javascript:void(0)">انصراف</a>
+                                <a id="ContentPlaceHolder1_btn_Accept" class="btn btn-danger" style="float: left" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$btn_Accept&#39;,&#39;&#39;)">تایید</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
