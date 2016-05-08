@@ -1,13 +1,7 @@
 var app = angular.module('myApp', []);
-app.controller('mainCtrl', function($scope, $http) {
-    /*
-    $http({
-        method : "POST",
-        url : "api/load"
-    }).then(function(response) {
-        alert(response.data);
-    });
-    */
+app.controller('mainCtrl', function($scope, $http, $interval) {
+
+    var AUTO_UPDATE_DURATION = 15000; //milliseconds
 
     $scope.firstName= "John";
     $scope.lastName= "Doe";
@@ -15,7 +9,6 @@ app.controller('mainCtrl', function($scope, $http) {
 
     $scope.activeIndex = 0;
 
-   // var activeIndex = 5;
     $scope.getStatus = function(){
         $http.post("customer/status")
             .then(function(response) {
@@ -24,8 +17,6 @@ app.controller('mainCtrl', function($scope, $http) {
     };
 
     $scope.isOn = function(i){
-        //alert("hi" + i + '::' + $scope.activeIndex );
-        //return ($scope.activeIndex === i);
         return (5 === i);
     };
 
@@ -38,13 +29,21 @@ app.controller('mainCtrl', function($scope, $http) {
         });
     };
 
+    $scope.symbolList = null;
+    var reloadSymbolList = function(){
+        $http({
+            method : "POST",
+            url : "api/symbols"
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.symbolList = response.data;
+        });
+    }
+
     $scope.selectedSymbol = null;
     $scope.symbolInfo = null;
 
-    $scope.setSymbol = function(s){
-        $scope.selectedSymbol = s;
-
-        //angular.element("#symbolModal").modal();
+    var reloadSymbolInfo = function(s){
         $http({
             method : "POST",
             url : "api/symbols/info",
@@ -58,6 +57,11 @@ app.controller('mainCtrl', function($scope, $http) {
         });
     };
 
+    $scope.setSymbol = function(s){
+        $scope.selectedSymbol = s;
+        reloadSymbolInfo(s);
+    };
+
     $scope.changeData = function(){
       $scope.symbolInfo.push({userId:"goolakh"});
     };
@@ -65,80 +69,115 @@ app.controller('mainCtrl', function($scope, $http) {
 
     $scope.userInfo = null;
     $scope.customerId = 2;
-    $http({
-        method : "POST",
-        url : "api/customer/credit",
-        params: {
-            id : $scope.customerId
-        }
+    var reloadUserInfo = function(){
+        $http({
+            method : "POST",
+            url : "api/customer/credit",
+            params: {
+                id : $scope.customerId
+            }
 
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.userInfo = response.data;
-    });
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.userInfo = response.data;
+        });
+    };
 
 
     $scope.activeOrders = null;
     $scope.approvedOrders = null;
     $scope.declinedOrders = null;
-    $http({
-        method : "POST",
-        url : "api/customer/activeOrders",
-        params: {
-            id : $scope.customerId
-        }
+    var reloadActiveOrders = function(){
+        $http({
+            method : "POST",
+            url : "api/customer/activeOrders",
+            params: {
+                id : $scope.customerId
+            }
 
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.activeOrders = response.data;
-    });
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.activeOrders = response.data;
+        });
+    };
 
-    $http({
-        method : "POST",
-        url : "api/customer/approvedOrders",
-        params: {
-            id : $scope.customerId
-        }
+    var reloadApprovedOrders = function(){
+        $http({
+            method : "POST",
+            url : "api/customer/approvedOrders",
+            params: {
+                id : $scope.customerId
+            }
 
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.approvedOrders = response.data;
-    });
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.approvedOrders = response.data;
+        });
+    };
 
-    $http({
-        method : "POST",
-        url : "api/customer/declinedOrders",
-        params: {
-            id : $scope.customerId
-        }
+    var reloadDeclinedOrders = function(){
+        $http({
+            method : "POST",
+            url : "api/customer/declinedOrders",
+            params: {
+                id : $scope.customerId
+            }
 
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.declinedOrders = response.data;
-    });
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.declinedOrders = response.data;
+        });
+    };
 
     $scope.shareBasket = null;
-    $http({
-        method : "POST",
-        url : "api/customer/shares",
-        params: {
-            id : $scope.customerId
-        }
+    var reloadShareBasket = function(){
+        $http({
+            method : "POST",
+            url : "api/customer/shares",
+            params: {
+                id : $scope.customerId
+            }
 
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.shareBasket = response.data;
-    });
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.shareBasket = response.data;
+        });
+    };
 
+    $scope.isRefreshingMarket = false;
     $scope.marketActiveOrders = null;
-    $http({
-        method : "POST",
-        url : "api/market/info"
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.marketActiveOrders = response.data;
-    });
+    var reloadMarketStatus = function(){
+        $http({
+            method : "POST",
+            url : "api/market/info"
+        }).then(function(response) {
+            //alert(response.data);
+            $scope.marketActiveOrders = response.data;
+        });
+    };
+    $scope.updateMarketStatus = function(){
+        $scope.isRefreshingMarket = true;
+        reloadMarketStatus() ;
+        $scope.isRefreshingMarket = false;
+        alert("manual");
+    };
 
+
+    $scope.init = function(){
+        reloadUserInfo();
+        reloadSymbolList();
+        reloadActiveOrders();
+        reloadApprovedOrders();
+        reloadDeclinedOrders();
+        reloadShareBasket();
+        reloadMarketStatus();
+        reloadSymbolInfo($scope.selectedSymbol);
+        //alert("done!");
+    };
+
+
+    //system will be auto updated
+    $interval($scope.init, AUTO_UPDATE_DURATION);
 });
 
 app.controller('menuCtrl', function($scope){
@@ -183,28 +222,5 @@ app.controller('addCtrl', function($scope, $http){
 });
 
 app.controller('symbolCtrl', function($scope, $http){
-
-    //$scope.symbolList = ["RENA1", "SAIPA"];
-    $http({
-        method : "POST",
-        url : "api/symbols"
-    }).then(function(response) {
-        //alert(response.data);
-        $scope.symbolList = response.data;
-    });
-	
-	$scope.getinfo = function(x){
-        $http({
-        method : "POST",
-        url : "/api/symbols/info",
-		params: {
-                symbol : "x"
-        }
-	
-	}).then(function(response) {
-            $scope.symbolList = response.data;
-        });
-    }
-
 
 });

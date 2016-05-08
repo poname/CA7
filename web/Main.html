@@ -1,4 +1,4 @@
-<html ng-app="myApp" ng-controller="mainCtrl">
+<html ng-app="myApp" ng-controller="mainCtrl" ng-init="init()">
 <script src="js/angular.min.js"></script>
 <script src="js/app.js"></script>
 <title>{{ pageTitle }}</title>
@@ -25,9 +25,9 @@
                 <div class="row">
                     <button class="btn btn-warning" ng-click="loadSampleData()">Load</button>
                     <button class="btn btn-default" data-toggle="modal" data-target="#symbolModal">modal</button>
-                    <!--<div>
+                    <div>
                         Name: <input ng-model="customerId">
-                    </div>-->
+                    </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="status" ng-controller="symbolCtrl" ng-show="true">
                             <span>لیست نماد ها</span>
@@ -53,25 +53,29 @@
                         </div>
 
                         <div class="status" ng-controller="symbolCtrl" ng-show="true">
-                            <span>اطلاعات کاربر</span>
-                            <p>
-                                <span>شناسه: {{ userInfo.id }}</span>
-                                <span>بودجه: {{ userInfo.credit }}</span>
-                                <span>نام: {{ userInfo.name }}</span>
-                                <span>نام خانوادگی: {{ userInfo.family }}</span>
-                            </p>
+                            <span>پنل کاربری</span>
 
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab1">فعال</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab0">اطلاعات</a></li>
+                                <li><a data-toggle="tab" href="#tab1">فعال</a></li>
                                 <li><a data-toggle="tab" href="#tab2">موفق</a></li>
                                 <li><a data-toggle="tab" href="#tab3">ناموفق</a></li>
                                 <li><a data-toggle="tab" href="#tab4">سبد سهام</a></li>
+                                <li><a data-toggle="tab" href="#tab5">بازار</a></li>
                             </ul>
                             <div class="tab-content">
-                                <div id="tab1" class="tab-pane fade in active">
-                                    <span class="bg-info">درخواست های فعال</span>
+                                <div id="tab0" class="tab-pane fade in active"><p></p>
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-danger">شناسه: {{ userInfo.id }}</li>
+                                        <li class="list-group-item list-group-item-success">بودجه: {{ userInfo.credit }}</li>
+                                        <li class="list-group-item list-group-item-info">نام: {{ userInfo.name }}</li>
+                                        <li class="list-group-item list-group-item-warning">نام خانوادگی: {{ userInfo.family }}</li>
+                                    </ul>
+                                </div>
+                                <div id="tab1" class="tab-pane fade">
+                                    <!-- <span class="bg-info">درخواست های فعال</span> -->
                                     <table class = "table table-hover table-condensed">
-
+                                        <caption class="bg-info">تعداد درخواست های فعال کاربر: {{ activeOrders.length }}</caption>
                                         <thead>
                                         <tr>
                                             <th>ردیف</th>
@@ -104,8 +108,10 @@
                                     </table>
                                 </div>
                                 <div id="tab2" class="tab-pane fade">
-                                    <span class="bg-success">درخواست های موفق</span>
+                                   <!--  <span class="bg-success">درخواست های موفق</span> -->
                                     <table class = "table table-hover table-condensed">
+
+                                        <caption class="bg-success">تعداد درخواست های موفق کاربر: {{ approvedOrders.length }}</caption>
 
                                         <thead>
                                         <tr>
@@ -139,8 +145,10 @@
                                     </table>
                                 </div>
                                 <div id="tab3" class="tab-pane fade">
-                                    <span class="bg-danger">درخواست های ناموفق</span>
+                                    <!-- <span class="bg-danger">درخواست های ناموفق</span> -->
                                     <table class = "table table-hover table-condensed">
+
+                                        <caption class="bg-danger">تعداد درخواست های ناموفق کاربر: {{ declinedOrders.length }}</caption>
 
                                         <thead>
                                         <tr>
@@ -174,8 +182,10 @@
                                     </table>
                                 </div>
                                 <div id="tab4" class="tab-pane fade">
-                                    <span class="bg-primary">سهام آزاد کاربر</span>
+                                    <!-- <span class="bg-primary">سهام آزاد کاربر</span>-->
                                     <table class = "table table-hover table-condensed">
+
+                                        <caption class="bg-primary">سهام آزاد کاربر</caption>
 
                                         <thead>
                                         <tr>
@@ -196,46 +206,52 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div id="tab5" class="tab-pane fade">
+                                    <!-- <span>وضعیت بازار</span> -->
+                                    <a id="btn_Update" class="btn btn-warning" ng-click="updateMarketStatus()">به روز رسانی <i class="fa fa-refresh" ng-show="!isRefreshingMarket"></i> <i class="fa fa-refresh fa-spin" ng-show="isRefreshingMarket"></i></a>
+                                    <table class = "table table-hover table-condensed">
+
+                                        <caption class="bg-success">تعداد درخواست های موجود: {{ marketActiveOrders.length }}</caption>
+
+                                        <thead>
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>کاربر</th>
+                                            <th>نماد</th>
+                                            <th>قیمت</th>
+                                            <th>تعداد اولیه</th>
+                                            <th>تعداد باقیمانده</th>
+                                            <th>عملیات</th>
+                                            <th>نوع</th>
+                                            <th>مرجع</th>
+                                            <th>وضعیت</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        <tr ng-repeat="r in marketActiveOrders | orderBy : 'symbol' ">
+                                            <td>{{ $index+1 }}</td>
+                                            <td>{{ r.userId }}</td>
+                                            <td>{{ r.symbol }}</td>
+                                            <td>{{ r.price }}</td>
+                                            <td>{{ r.initQuantity }}</td>
+                                            <td>{{ r.remainingQuantity }}</td>
+                                            <td>{{ r.operation }}</td>
+                                            <td>{{ r.type }}</td>
+                                            <td>{{ r.oid }}</td>
+                                            <td>{{ r.status }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
 
                         <div class="status" ng-controller="symbolCtrl" ng-show="true">
-                            <span>وضعیت بازار</span>
-                            <table class = "table table-hover table-condensed">
 
-                                <thead>
-                                <tr>
-                                    <th>ردیف</th>
-                                    <th>کاربر</th>
-                                    <th>نماد</th>
-                                    <th>قیمت</th>
-                                    <th>تعداد اولیه</th>
-                                    <th>تعداد باقیمانده</th>
-                                    <th>عملیات</th>
-                                    <th>نوع</th>
-                                    <th>مرجع</th>
-                                    <th>وضعیت</th>
-
-                                </tr>
-                                </thead>
-
-                                <tbody>
-
-                                <tr ng-repeat="r in marketActiveOrders | orderBy : 'symbol' ">
-                                    <td>{{ $index+1 }}</td>
-                                    <td>{{ r.userId }}</td>
-                                    <td>{{ r.symbol }}</td>
-                                    <td>{{ r.price }}</td>
-                                    <td>{{ r.initQuantity }}</td>
-                                    <td>{{ r.remainingQuantity }}</td>
-                                    <td>{{ r.operation }}</td>
-                                    <td>{{ r.type }}</td>
-                                    <td>{{ r.oid }}</td>
-                                    <td>{{ r.status }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -244,7 +260,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4>اطلاعات نماد<i class="fa fa-lock"></i></h4>
+                                <h4>اطلاعات نماد</h4>
                                 <p>{{ selectedSymbol }}</p>
                             </div>
                             <div class="modal-body">
@@ -256,13 +272,13 @@
 
                                                 <form action="sell" method="post">
                                                     <div class="form-horizontal" role="form">
-                                                        <div class="form-group">
+                                                        <div class="form-group" ng-show="false">
                                                             <label for="orderSellId" class="col-sm-4 control-label">شناسه کاربر</label>
                                                             <div class="col-sm-6">
                                                                 <input name="id" id="orderSellId" ng-model="customerId" class="form-control" required="" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('لطفا شناسه کاربری را وارد کنید!')" type="text">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group" ng-show="false">
                                                             <label for="orderSellInstrument" class="col-sm-4 control-label">نام نماد</label>
                                                             <div class="col-sm-6">
                                                                 <input name="instrument" id="orderSellInstrument" ng-model="selectedSymbol" class="form-control"  required="required" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('لطفا نام نماد را وارد کنید!')" type="text">
@@ -305,13 +321,13 @@
 
                                                 <form action="buy" method="post">
                                                     <div class="form-horizontal" role="form">
-                                                        <div class="form-group">
+                                                        <div class="form-group" ng-show="false">
                                                             <label for="orderBuyId" class="col-sm-4 control-label">شناسه کاربر</label>
                                                             <div class="col-sm-6">
                                                                 <input name="id" id="orderBuyId" ng-model="customerId" class="form-control" required="" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('لطفا شناسه کاربری را وارد کنید!')" type="text">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group" ng-show="false">
                                                             <label for="orderBuyInstrument" class="col-sm-4 control-label">نام نماد</label>
                                                             <div class="col-sm-6">
                                                                 <input name="instrument" id="orderBuyInstrument" ng-model="selectedSymbol" class="form-control" required="required" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('لطفا نام نماد را وارد کنید!')" type="text">
@@ -353,6 +369,8 @@
 
 
                                 <table class = "table table-hover table-condensed">
+
+                                    <caption class="bg-success">لیست سفارش های فعال نماد {{ selectedSymbol }}</caption>
 
                                     <thead>
                                     <tr>

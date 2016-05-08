@@ -1,8 +1,8 @@
 ﻿@charset "utf-8";
 @import url(bootstrap.min.css);
 @import url(bootstrap.rtl.min.css);
-/*@import url(font-awesome.min.css);
-@import url(../fonts/flaticon.css);*/
+@import url(font-awesome.min.css);
+/*@import url(../fonts/flaticon.css);*/
 
 
 @font-face {
@@ -900,10 +900,48 @@ footer {
     }
 }
 
+#btn_Update{
+    float: left;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
 
+span{
+    margin-top: 10px;
+}
 
+/*
+.nav-tabs{
+    background-color:#161616;
+}
+.tab-content{
+    background-color:#303136;
+    color:#555;
+    padding:5px
+}
+.nav-tabs > li > a{
+    border: medium none;
+}
+.nav-tabs > li > a:hover{
+    background-color: #303136 !important;
+    border: medium none;
+    border-radius: 0;
+    color:#555;
+}
 
+*/
+/*
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background-color: #2a6496;
+}
+*/
 
+caption{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 
 @media (max-width: 480px) {
